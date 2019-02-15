@@ -6,6 +6,12 @@
 #include "adc.h"
 #include "i2c.h"
 
+struct adcData_struct adcData;
+uint8_t dataToSend[DATA_TO_SEND_SIZE];
+uint8_t input_data = 0;
+uint8_t firsttime = 0;
+uint8_t transitionDone = 0;
+
 void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef *hadc)
 {
 	HAL_ADC_Stop_IT(&hadc1);
@@ -20,23 +26,31 @@ void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef *hadc)
 		}
 		adcData.average = temp / ADC_RESULTS_NUMBER;
 		adcData.conversions++;
-
-		if(!adcData.first_time) {
-			Uint8FromFloat(&adcData.average, &dataToSend[0]);
-			HAL_I2C_Slave_Transmit_DMA(&hi2c1, &dataToSend[0], DATA_TO_SEND_SIZE);
-			adcData.first_time = 1;
-		}
 	}
 	else {
 		HAL_ADC_Start_IT(&hadc1);
+	}
+
+	if(!firsttime) {
+		firsttime = 1;
 	}
 }
 
 void HAL_I2C_SlaveTxCpltCallback (I2C_HandleTypeDef *hi2c)
 {
-	Uint8FromFloat(&adcData.average, &dataToSend[0]);
-	HAL_I2C_Slave_Transmit_DMA(&hi2c1, &dataToSend[0], DATA_TO_SEND_SIZE);
+	transitionDone = 1;
 }
+
+void HAL_I2C_SlaveRxCpltCallback (I2C_HandleTypeDef *hi2c)
+{
+
+}
+
+void HAL_I2C_AddrCallback (I2C_HandleTypeDef * hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode)
+{
+
+}
+
 
 void clearArrayUint32(uint32_t* target, uint16_t size)
 {
@@ -52,14 +66,10 @@ void clearArrayFloat(float* target, uint16_t size)
 	}
 }
 
-void Uint8FromFloat(float *input, uint8_t *outArray)
+void Uint8FromFloat(float input, uint8_t *outArray)
 {
-	uint8_t *d = (uint8_t *) &input;
-
-	outArray[0] = *d & 0xFF;
-	outArray[1] = (*d >> 8) & 0xFF;
-	outArray[2] = (*d >> 16) & 0xFF;
-	outArray[3] = (*d >> 24) & 0xFF;
+	float *dest = (float*) (outArray);
+	*dest = input;
 }
 
 /****END OF FILE****/

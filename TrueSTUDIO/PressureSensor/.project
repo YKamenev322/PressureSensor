@@ -84,7 +84,7 @@
 		<link>
 			<name>Application/Inc</name>
 			<type>2</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Desktop/PressureSensor/Inc</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc</locationURI>
 		</link>
 		<link>
 			<name>Application/Src</name>
@@ -144,12 +144,17 @@
 		<link>
 			<name>Application/Src/user.c</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Desktop/PressureSensor/Src/user.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/user.c</locationURI>
 		</link>
 		<link>
 			<name>Application/TrueSTUDIO/startup_stm32f103x6.s</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/startup_stm32f103x6.s</locationURI>
+		</link>
+		<link>
+			<name>Application/TrueSTUDIO/syscalls.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/CMSIS/system_stm32f1xx.c</name>
