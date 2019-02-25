@@ -127,6 +127,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/i2c.c</locationURI>
 		</link>
 		<link>
+			<name>Application/Src/iwdg.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/iwdg.c</locationURI>
+		</link>
+		<link>
 			<name>Application/Src/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/main.c</locationURI>
@@ -210,6 +215,11 @@
 			<name>Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_i2c.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_i2c.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_iwdg.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_iwdg.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32F1xx_HAL_Driver/stm32f1xx_hal_pwr.c</name>

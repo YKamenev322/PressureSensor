@@ -245,7 +245,7 @@
 	</storageModule>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug">
-			<resource resourceType="PROJECT" workspacePath="PressureSensor"/>
+			<resource resourceType="PROJECT" workspacePath="/PressureSensor"/>
 		</configuration>
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/PressureSensor"/>

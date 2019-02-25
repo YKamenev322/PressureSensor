@@ -5,6 +5,9 @@
 #include "user.h"
 #include "adc.h"
 #include "i2c.h"
+#include "iwdg.h"
+
+#include "string.h"
 
 struct adcData_struct adcData;
 uint8_t dataToSend[DATA_TO_SEND_SIZE];
@@ -32,7 +35,10 @@ void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef *hadc)
 	}
 
 	if(!firsttime) {
+		formData();
+		HAL_I2C_Slave_Transmit_IT(&hi2c1, dataToSend, DATA_TO_SEND_SIZE);
 		firsttime = 1;
+		HAL_IWDG_Init(&hiwdg);
 	}
 }
 
@@ -51,6 +57,14 @@ void HAL_I2C_AddrCallback (I2C_HandleTypeDef * hi2c, uint8_t TransferDirection, 
 
 }
 
+void formData()
+{
+	struct pressureResponse_s res;
+	res.code = PRESSURE_RESPONSE_CODE;
+	res.value = adcData.average;
+	memcpy((void*)dataToSend, (void*)&res, DATA_TO_SEND_SIZE);
+	AddChecksumm8b(dataToSend, DATA_TO_SEND_SIZE);
+}
 
 void clearArrayUint32(uint32_t* target, uint16_t size)
 {
@@ -70,6 +84,18 @@ void Uint8FromFloat(float input, uint8_t *outArray)
 {
 	float *dest = (float*) (outArray);
 	*dest = input;
+}
+
+void AddChecksumm8b(uint8_t *msg, uint16_t length)
+{
+	uint8_t crc = 0;
+	int i = 0;
+
+	for(i=0; i < length - 1; i++) {
+		crc ^= msg[i];
+	}
+
+	msg[length-1] = crc;
 }
 
 /****END OF FILE****/
